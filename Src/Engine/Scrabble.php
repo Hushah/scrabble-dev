@@ -106,7 +106,7 @@ class Scrabble
      * @param string|null $rack
      * @return array
      */
-    public function matchInDictionary(?string $rack = null): array
+    public function matchInDictionary(string $rack = null): array
     {
         $rack = $this->getLetterCount($rack);
 
@@ -143,8 +143,16 @@ class Scrabble
     public function removeNonAlphaCharacters(string $string)
     {
         /**
-         * todo replace this with a method to stip non alpha chars
+         * todo replace this with a method to strip non alpha chars
+         * COMPLETED
+         * Author: Hussain Shah
          */
+
+        /** preg_replace() takes all the chars from the regular expression ('/[^a-zA-Z]/') 
+         * and replaces them with an empty string ('') which is then assigned back to the $string variable.
+         */
+        $string = preg_replace('/[^a-zA-Z]/', '', $string);
+
         return $string;
     }
 
@@ -198,7 +206,7 @@ class Scrabble
      * @param string|null $string
      * @return array
      */
-    public function getLetterCount(?string $string = null): array
+    public function getLetterCount(string $string = null): array
     {
         if (empty($this->letterCount)) {
             if (null === $string) {

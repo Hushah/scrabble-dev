@@ -1,0 +1,234 @@
+/* Rearrange the placement of divs if the page is not wide enough */
+@media (max-width: 768px) {
+    .mainContent {
+        flex-direction: column;
+    }
+    /* lower the height of introInputAndRack */
+    .introInputAndRack {
+        max-height: 50%;
+    }
+}
+
+/* Fonts */
+@font-face {
+    font-family: 'Scramblemixed-YEdO';
+    src: url('fonts/Scramblemixed-YEdO.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'coolvetica-rg';
+    src: url('fonts/coolvetica-rg.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Animation which will be used to animated the container popping into the screen */
+@keyframes popOutAnim{
+    0%{
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    50%{
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background-color: #d8cd97;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: stretch; /* Ensure full height coverage */
+}
+
+/* This refers to ALL content on the page, including title */
+.content {
+    background-color: #164d2d;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 2000px;
+    height: 100vh; /* Full viewport height */
+    box-sizing: border-box; /* Include padding/border in width/height */
+    display: flex;
+    flex-direction: column; /* Arrange children vertically */
+    overflow: hidden; /* Hide content that overflows */
+}
+
+/* This is the div which will contain both the part of the title which says "scrabble", and "rack" */
+/* Title needs to be split because they will be using different font sizes and colours */
+.title {
+    opacity: 0; /* Ensure title is invisible on page load */
+    /* Apply popOutAnim to title */
+    animation: popOutAnim 0.5s 0.5s forwards;
+
+    user-select: none; /* Makes the title unselectable */
+
+    gap: 10px; /* Set both scrabbleTitle and rackTitle together */
+    position: relative; /* To position the square relative to this container */
+    width: 500px;
+    height: 80px;
+    background-color: #d8cd97;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    border: 2px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+}
+
+/* "Scrabble" part of the title */
+.scrabbleTitle {
+    font-family: 'Scramblemixed-YEdO';
+    font-size: 62px;
+    color: #bb2a1c;
+    text-align: center;
+}
+
+/* "Rack" part of the title */
+.rackTitle{
+    font-family: 'Scramblemixed-YEdO';
+    font-size: 80px;
+    color: black;
+    text-align: center;
+}
+
+/* All content, outside of the title, go here */
+.mainContent {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Hide content that overflows */
+}
+
+.introInputAndRack, .tableContainer {
+    flex: 1; /* Each will take up 50% of the space */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Intro, input and the rack will take up the left half of the display */
+.introInputAndRack {
+    margin: 20px 20px; /* Add margin to separate the sections */
+    padding: 0px;
+    height: 5%;
+}
+
+/* Intro will be at the top half  of the left side of the display */
+.introAndInput{
+    opacity: 0; /* Ensure introAndInput is invisible on page load */
+    /* Apply popOutAnim to introAndInput */
+    animation: popOutAnim 0.5s 1.5s forwards;
+
+    background-color: #d8cd97;
+    border: 2px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    font-family: 'coolvetica-rg';
+    font-size: 25px;
+    color: black;
+
+    border-radius: 15px;
+    margin: 0px;
+    margin-bottom: 20px;
+    padding: 5px 20px;
+    padding-bottom: 20px;
+}
+
+.rackDisplay, .tableContainer{
+    animation: none; /* Initially no animation for these elements */
+}
+
+/* popOut animation will be used when a div is going to be displayed on the screen */
+.rackDisplay.popOut, .tableContainer.popOut{
+    /* Apply popOutAnim to rackDisplay and tableContainer */
+    animation: popOutAnim 0.5s ease-out forwards;
+}
+
+/* popAway animation (popOutAnim reversed) will be used when a div is being taken away from the screen */
+.rackDisplay.popAway, .tableContainer.popAway{
+    /* Apply popOutAnim to rackDisplay and tableContainer reversed */
+    animation: popOutAnim 0.5s ease-out reverse forwards;
+}
+
+/* The rack will be at the bottom half of the left side of the display */
+.rackDisplay{
+    background-color: #d8cd97;
+    border: 2px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    font-family: 'Scramblemixed-YEdO';
+    font-size: 50px;
+    color: #bb2a1c;
+    font-stretch: condensed;
+    font-weight: bold;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+    border-radius: 15px;
+    padding-left: 20px;
+
+    opacity: 0; /* Invisible on page load */
+}
+
+.scramble-font {
+    font-family: 'Scramblemixed-YEdO';
+    font-size: 65px;
+    color: black;
+    font-weight: bold;
+}
+
+/* Container for the table of potential words that can be made using the rack */
+/* Will be displayed on the right half of the screen */
+.tableContainer {
+    background-color: #d8cd97;
+    border: 2px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    max-height: 100%; /* Limit the height of the table */
+    border-radius: 15px;
+    margin: 20px 20px;
+
+    /* Invisible on page load */
+    opacity: 0;
+}
+
+/* Additional styles for the table and cells */
+table, th, td {
+    border: 2px solid black;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+th, td {
+    width: 50%; /* Each cell will take up 50% of the width */
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+
+    font-family: 'coolvetica-rg';
+    font-size: 15px;
+    letter-spacing: 2px; /* Space out the text */
+}
